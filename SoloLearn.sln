@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoloLearn.Chat.API", "SoloLearn.Chat.API\SoloLearn.Chat.API.csproj", "{9D503F23-D9A8-4236-ADCA-D6592225BE3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoloLearn.Chat.Core", "SoloLearn.Chat.Core\SoloLearn.Chat.Core.csproj", "{CAB12CAD-5C69-45EF-B0A5-E71A28EC14BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoloLearn.Chat.Core.Data", "SoloLearn.Chat.Core.Data\SoloLearn.Chat.Core.Data.csproj", "{E2BFE4C1-5105-405F-A8A0-2449B8CE8142}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoloLearn.Chat.Core.Integration", "SoloLearn.Chat.Core.Integration\SoloLearn.Chat.Core.Integration.csproj", "{23DB9320-66A4-4501-85D2-D747ECE2C268}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoloLearn.Chat.Service", "SoloLearn.Chat.Service\SoloLearn.Chat.Service.csproj", "{FCFFBE6F-48BB-4EFF-8996-574BB263D93A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D503F23-D9A8-4236-ADCA-D6592225BE3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D503F23-D9A8-4236-ADCA-D6592225BE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D503F23-D9A8-4236-ADCA-D6592225BE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D503F23-D9A8-4236-ADCA-D6592225BE3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAB12CAD-5C69-45EF-B0A5-E71A28EC14BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB12CAD-5C69-45EF-B0A5-E71A28EC14BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAB12CAD-5C69-45EF-B0A5-E71A28EC14BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAB12CAD-5C69-45EF-B0A5-E71A28EC14BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2BFE4C1-5105-405F-A8A0-2449B8CE8142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2BFE4C1-5105-405F-A8A0-2449B8CE8142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2BFE4C1-5105-405F-A8A0-2449B8CE8142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2BFE4C1-5105-405F-A8A0-2449B8CE8142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23DB9320-66A4-4501-85D2-D747ECE2C268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23DB9320-66A4-4501-85D2-D747ECE2C268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23DB9320-66A4-4501-85D2-D747ECE2C268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23DB9320-66A4-4501-85D2-D747ECE2C268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCFFBE6F-48BB-4EFF-8996-574BB263D93A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFFBE6F-48BB-4EFF-8996-574BB263D93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFFBE6F-48BB-4EFF-8996-574BB263D93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFFBE6F-48BB-4EFF-8996-574BB263D93A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B261BBCE-63E3-4366-B00A-BA4F54ABE7A5}
+	EndGlobalSection
+EndGlobal

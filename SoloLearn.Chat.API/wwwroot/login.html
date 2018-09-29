@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Chat Client</title>
+
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/Signin.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+
+        <form class="form-signin" method="post" action="/Login">
+            <h2 class="form-signin-heading">Please sign in</h2>
+
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" name="Email" class="form-control" placeholder="Email address" required autofocus>
+
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" name="Password" class="form-control" placeholder="Password" required>
+
+
+            <button class="btn btn btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+
+        If you don't have an account, <a href="/create-user.html">click here</a> to create one
+    </div> <!-- /container -->
+
+
+</body>
+</html>

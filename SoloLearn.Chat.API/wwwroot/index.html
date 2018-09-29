@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/chat-room.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/signalr.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        var userName = "";
+        var room = "";
+
+        $(document).ready(function () {
+
+            whoAmI();
+            loadRooms();
+
+            $.get("/api/Message/History/?roomName=" + room).done(function (data) {
+
+                let element = "";
+
+                for (var i = 0; i < data.length; i++) {
+                    
+                    if (data[i].author === userName) {
+                        
+                        element = "<div class='outgoing_msg'>" +
+                            "    <div class='sent_msg'>" +
+                            "       <p>" + data[i].content + "</p>" +
+                            "        <span class='time_date'> 11:01 AM    |    June 9</span>" +
+                            "     </div>" +
+                            " </div>";
+                    } else {
+                        element = " <div class='incoming_msg'>" +
+                            "    <div class='incoming_msg_img'> <img src='https://ptetutorials.com/images/user-profile.png'></div>" +
+                            "    <div class='received_msg'>" +
+                            "        <b>" + data[i].author + "</b>" +
+                            "        <div class='received_withd_msg'>" +
+                            "             <p>" + data[i].content + "</p>" +
+                            "            <span class='time_date'> 11:01 AM    |    June 9</span>" +
+                            "        </div>" +
+                            "    </div>" +
+                            "</div >";
+                    }
+                    
+                    $(".msg_history").append(element);
+                }
+
+            });
+
+            $("#btn-new-room").click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "/api/Rooms",
+                    data: JSON.stringify({ "Name": room }),
+                    success(data) {
+
+                        if (data.message == "room created") {
+                            loadRooms();
+                            $("#roomName").val("");
+                        }
+                    },
+                });
+            });
+
+        }).bind("beforeunload", function () {
+            alert("vai não, fica mais");
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var connection = new signalR.HubConnectionBuilder().withUrl('/chatHub').build();
+            var lastMessage = "";
+
+            connection.on("Receive", function (message) {
+
+                if (message.content != lastMessage && message.author != userName) {
+
+                    let element = " <div class='incoming_msg'>" +
+                        "    <div class='incoming_msg_img'> <img src='https://ptetutorials.com/images/user-profile.png'></div>" +
+                        "    <div class='received_msg'>" +
+                        "        <b>" + message.author + "</b>" +
+                        "        <div class='received_withd_msg'>" +
+                        "             <p>" + message.content + "</p>" +
+                        "            <span class='time_date'> 11:01 AM    |    June 9</span>" +
+                        "        </div>" +
+                        "    </div>" +
+                        "</div >";
+
+                    $(".msg_history").append(element);
+
+                    element = "";
+                }
+            });
+
+            connection.start()
+                .then(function () {
+
+                    console.log('connection started on ' + room);
+
+
+                    connection.invoke("JoinRoom", room).catch(err => console.error(err.toString()));
+
+                    document.getElementById('msg_send_btn').addEventListener('click', function (event) {
+
+                        lastMessage = $(".write_msg").val();
+
+                        connection.invoke("Send",
+                            {
+                                Content: lastMessage,
+                                RoomName: room
+                            }).catch(err => console.error(err.toString()));
+
+                        let element = "<div class='outgoing_msg'>" +
+                            "    <div class='sent_msg'>" +
+                            "       <p>" + $(".write_msg").val() + "</p>" +
+                            "        <span class='time_date'> 11:01 AM    |    June 9</span>" +
+                            "     </div>" +
+                            " </div>";
+
+                        $(".msg_history").append(element);
+
+                        element = "";
+
+                        $(".write_msg").val("");
+                    });
+
+                }).catch(error => {
+                    console.error(error.message);
+                });
+        });
+
+        function whoAmI() {
+            $.ajax({
+                type: "GET",
+                url: "/api/Users",
+                async: false,
+                success: function (data) {
+                    userName = data.userName;
+                }
+            })
+        }
+
+        function loadRooms() {
+
+            $.ajax({
+                type: "GET",
+                url: "/api/Rooms",
+                async: false,
+                success: function (data) {
+
+                    room = data[0].name;
+
+                    $(".inbox_chat").html("");
+
+                    let element = "";
+
+                    for (let i = 0; i < data.length; i++) {
+                        element += "<div class='chat_list active_chat'>" +
+                            "    <div class='chat_people'> " +
+                            "        <div class='chat_img'><img src='https://ptetutorials.com/images/user-profile.png'></div>" +
+                            "       <div class='chat_ib'>" +
+                            "            <h5 style='margin-top: 10px; float: left;'><a href='chat-room.html?room=" + data[i].name + "'>" + data[i].name + "</a></h5>" +
+                            "            <button type='button' class='close' aria-label='Close' style='margin-top: 8px' onclick='javascript:deleteRoom(" + data[i].id + ");'>" +
+                            "                <span aria-hidden='true'>&times;</span>" +
+                            "            </button >" +
+                            "       </div>" +
+                            "    </div> " +
+                            " </div>";
+                    }
+
+                    $(".inbox_chat").append(element);
+
+                    element = "";
+                }
+            });
+        }
+
+        function deleteRoom(id) {
+
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Rooms/" + id,
+                success(data) {
+                    loadRooms();
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h3 class=" text-center">Chating</h3>
+        <div class="messaging">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4>Rooms</h4>
+                        </div>
+                    </div>
+                    <div class="inbox_chat">
+
+                    </div>
+                    <input type="text" id="roomName" placeholder="New Room" class="form-control" style="width:100%; float: left;" />
+                    <button class="btn btn-primary" id="btn-new-room" type="button" style="width:100%; float: left;">Create</button>
+                </div>
+                <div class="mesgs">
+                    <div class="msg_history">
+                    </div>
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <input type="text" class="write_msg" placeholder="Type a message" />
+                            <button class="msg_send_btn" id="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> >> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

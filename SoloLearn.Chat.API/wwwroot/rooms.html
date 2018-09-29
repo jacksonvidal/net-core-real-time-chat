@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Client</title>
+
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/Signin.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/signalr.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+
+    <form class="form-signin" method="post" action="/api/Rooms">
+        <h2 class="form-signin-heading">New Room</h2>
+
+        <label for="RoomName" class="sr-only">Room Name</label>
+        <input type="text" id="roomName" name="Name" class="form-control" placeholder="Name" required autofocus>
+
+        <button class="btn btn btn-primary btn-block" type="submit">Create</button>
+    </form>
+
+</body>
+</html>
