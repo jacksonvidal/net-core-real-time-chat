@@ -15,15 +15,18 @@ namespace SoloLearn.Chat.Service
 
         public override void Add(User entity)
         {
-            entity.PasswordHash = HashMd5(entity.PasswordHash);
-
-            if (GetSingleFirst(e => e.UserName == entity.UserName) == null)
+            if (!string.IsNullOrEmpty(entity.Email) && !string.IsNullOrEmpty(entity.PasswordHash) && !string.IsNullOrEmpty(entity.UserName))
             {
-                base.Add(entity);
-            }
-            else
-                throw new Exception("User already exists!");
+                entity.PasswordHash = HashMd5(entity.PasswordHash);
 
+                if (GetSingleFirst(e => e.UserName == entity.UserName) == null)
+                {
+                    base.Add(entity);
+                }
+                else
+                    throw new Exception("User already exists!");
+
+            }
         }
 
         public User Authenticate(User user)

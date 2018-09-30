@@ -23,9 +23,9 @@
                 let element = "";
 
                 for (var i = 0; i < data.length; i++) {
-                    
+
                     if (data[i].author === userName) {
-                        
+
                         element = "<div class='outgoing_msg'>" +
                             "    <div class='sent_msg'>" +
                             "       <p>" + data[i].content + "</p>" +
@@ -44,7 +44,7 @@
                             "    </div>" +
                             "</div >";
                     }
-                    
+
                     $(".msg_history").append(element);
                 }
 
@@ -110,7 +110,7 @@
 
                     document.getElementById('write_msg').addEventListener('keypress', function (event) {
 
-                        if(event.keyCode == 13) {
+                        if (event.keyCode == 13) {
                             let message = $(".write_msg").val();
                             sendMessage(connection, message, room);
                         }
@@ -135,7 +135,18 @@
                 url: "/api/Users",
                 async: false,
                 success: function (data) {
-                    userName = data.userName;
+
+                    if (data.userName != undefined) {
+                        userName = data.userName;
+                    } else {
+                        window.location.href = "login.html";
+                    }
+
+                },
+                error: function (err) {
+                    if (err.status == 401) {
+                        window.location.href = "login.html";
+                    }
                 }
             })
         }
@@ -147,10 +158,10 @@
                 url: "/api/Rooms",
                 async: false,
                 success: function (data) {
-                    
+
                     if (room == undefined)
                         room = data[0].name;
-                    
+
                     $(".inbox_chat").html("");
 
                     let element = "";
@@ -192,10 +203,10 @@
                 sURLVariables = sPageURL.split('&'),
                 sParameterName,
                 i;
-        
+
             for (i = 0; i < sURLVariables.length; i++) {
                 sParameterName = sURLVariables[i].split('=');
-            
+
                 if (sParameterName[0] === sParam) {
                     return sParameterName[1] === undefined ? true : sParameterName[1];
                 }
@@ -204,7 +215,7 @@
 
         function sendMessage(connection, message, room) {
             lastMessage = message;
-            
+
             connection.invoke("Send",
                 {
                     Content: lastMessage,
@@ -212,12 +223,12 @@
                 }).catch(err => console.error(err.toString()));
 
             let element = "<div class='outgoing_msg'>" +
-                    "    <div class='sent_msg'>" +
-                    "       <p>" + $(".write_msg").val() + "</p>" +
-                    "        <span class='time_date'> 11:01 AM    |    June 9</span>" +
-                    "     </div>" +
-                    " </div>";
-                
+                "    <div class='sent_msg'>" +
+                "       <p>" + $(".write_msg").val() + "</p>" +
+                "        <span class='time_date'> 11:01 AM    |    June 9</span>" +
+                "     </div>" +
+                " </div>";
+
             $(".msg_history").append(element);
 
             element = "";
