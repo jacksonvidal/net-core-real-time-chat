@@ -37,7 +37,7 @@ namespace SoloLearn.Chat.API.Controllers
                     UserName = user.UserName
                 });
 
-                return Redirect("/index.html");
+                return Redirect("/login.html");
 
             }
             catch (Exception ex)

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>SoloLearn - Chat</title>
     <link href="Content/bootstrap.css" rel="stylesheet" />
     <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="Content/chat-room.css" rel="stylesheet" />
@@ -10,7 +11,7 @@
     <script type="text/javascript">
 
         var userName = "";
-        var room = "";
+        var room = getUrlParameter("room");
 
         $(document).ready(function () {
 
@@ -68,7 +69,7 @@
             });
 
         }).bind("beforeunload", function () {
-            alert("vai não, fica mais");
+            alert("vai nï¿½o, fica mais");
         });
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -152,9 +153,10 @@
                 url: "/api/Rooms",
                 async: false,
                 success: function (data) {
-
-                    room = data[0].name;
-
+                    
+                    if (room == undefined)
+                        room = data[0].name;
+                    
                     $(".inbox_chat").html("");
 
                     let element = "";
@@ -164,7 +166,7 @@
                             "    <div class='chat_people'> " +
                             "        <div class='chat_img'><img src='https://ptetutorials.com/images/user-profile.png'></div>" +
                             "       <div class='chat_ib'>" +
-                            "            <h5 style='margin-top: 10px; float: left;'><a href='chat-room.html?room=" + data[i].name + "'>" + data[i].name + "</a></h5>" +
+                            "            <h5 style='margin-top: 10px; float: left;'><a href='index.html?room=" + data[i].name + "'>" + data[i].name + "</a></h5>" +
                             "            <button type='button' class='close' aria-label='Close' style='margin-top: 8px' onclick='javascript:deleteRoom(" + data[i].id + ");'>" +
                             "                <span aria-hidden='true'>&times;</span>" +
                             "            </button >" +
@@ -190,6 +192,21 @@
                 }
             });
         }
+
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+        
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+            
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
 
     </script>
 </head>
