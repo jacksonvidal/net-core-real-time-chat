@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoloLearn.Chat.API.Models
 {
+    /// <summary>
+    /// Simplifyed Model of Users to don't run into a croosed refernce
+    /// </summary>
     public class UserViewModel
     {
         [Required]

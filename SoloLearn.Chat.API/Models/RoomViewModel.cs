@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoloLearn.Chat.Api.Models
 {
+    /// <summary>
+    /// Creates the ViewModel for the Room
+    /// </summary>
     public class RoomViewModel
     {
         public int Id { get; set; }

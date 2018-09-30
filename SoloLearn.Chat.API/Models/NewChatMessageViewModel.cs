@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoloLearn.Chat.Api.Models
 {
+    /// <summary>
+    /// Simplifyed object to make the hadnle faster for the Hub
+    /// </summary>
     public class NewChatMessageViewModel
     {
         [Required]

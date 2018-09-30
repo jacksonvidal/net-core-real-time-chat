@@ -12,7 +12,10 @@ namespace SoloLearn.Chat.Service
     {
         public UserService(IUserRepository repository) : base(repository) { }
 
-
+        /// <summary>
+        /// Overrides the Add method to handle the password hashing
+        /// </summary>
+        /// <param name="entity"></param>
         public override void Add(User entity)
         {
             if (!string.IsNullOrEmpty(entity.Email) && !string.IsNullOrEmpty(entity.PasswordHash) && !string.IsNullOrEmpty(entity.UserName))
@@ -29,13 +32,24 @@ namespace SoloLearn.Chat.Service
             }
         }
 
+        /// <summary>
+        /// Authenticates an user
+        /// </summary>
+        /// <param name="user">User object</param>
+        /// <returns>An authenticated User</returns>
         public User Authenticate(User user)
         {
+            //hash the password
             var password = HashMd5(user.PasswordHash);
-
+            
             return GetSingleFirst(e => e.Email == user.Email && e.PasswordHash == password);
         }
 
+        /// <summary>
+        /// Hashs a string to MD5
+        /// </summary>
+        /// <param name="input">input string</param>
+        /// <returns></returns>
         private string HashMd5(string input)
         {
             MD5 md5Hash = MD5.Create();

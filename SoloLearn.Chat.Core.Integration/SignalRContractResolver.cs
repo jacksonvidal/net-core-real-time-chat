@@ -5,6 +5,9 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SoloLearn.Chat.Core.Integration
 {
+    /// <summary>
+    /// Provides the basic configurations of the JSON responses 
+    /// </summary>
     public class SignalRContractResolver : IContractResolver
     {
         private readonly Assembly _assembly;

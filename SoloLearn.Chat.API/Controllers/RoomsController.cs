@@ -16,15 +16,25 @@ namespace SoloLearn.Chat.Api.Controllers
     [Authorize]
     public class RoomsController : Controller
     {
+        //Intefaces of the services
         protected readonly IRoomService _roomService;
         protected readonly IMessageService _messageService;
 
+        /// <summary>
+        /// injection of the services
+        /// </summary>
+        /// <param name="roomService">Room Service</param>
+        /// <param name="messageService">Message Service</param>
         public RoomsController(IRoomService roomService, IMessageService messageService)
         {
             _roomService = roomService;
             _messageService = messageService;
         }
 
+        /// <summary>
+        /// List all avaliable rooms
+        /// </summary>
+        /// <returns>List of Rooms</returns>
         [HttpGet]
         public IList<RoomViewModel> Get()
         {
@@ -38,6 +48,11 @@ namespace SoloLearn.Chat.Api.Controllers
             return rooms;
         }
 
+        /// <summary>
+        /// Retrives a single room
+        /// </summary>
+        /// <param name="id">Room Id</param>
+        /// <returns>Room Model</returns>
         [HttpGet("{id}")]
         public RoomViewModel Get(int id)
         {
@@ -45,9 +60,14 @@ namespace SoloLearn.Chat.Api.Controllers
 
             return new RoomViewModel { Id = room.Id, Name = room.Name };
         }
-        
+
+        /// <summary>
+        /// Create a new room
+        /// </summary>
+        /// <param name="room">Room ViewModel</param>
+        /// <returns>JSON message</returns>
         [HttpPost]
-        public ActionResult Post([FromBody]RoomViewModel room)
+        public JsonResult Post([FromBody]RoomViewModel room)
         {
             try
             {
@@ -61,6 +81,11 @@ namespace SoloLearn.Chat.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Remove an specific Room
+        /// </summary>
+        /// <param name="id">Room Id</param>
+        /// <returns>JSON message</returns>
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {

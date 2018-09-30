@@ -26,6 +26,11 @@ namespace SoloLearn.Chat.API.Controllers
             this._userService = userService;
         }
 
+        /// <summary>
+        /// Retrive the last 5 messages from a room
+        /// </summary>
+        /// <param name="roomName">;Name of the room</param>
+        /// <returns>List od ChatMessages</returns>
         [HttpGet("History")]
         public List<ChatMessageViewModel> History(string roomName)
         {

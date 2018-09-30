@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SoloLearn.Chat.Api.Models
 {
+    /// <summary>
+    /// Message view model
+    /// </summary>
     public class ChatMessageViewModel
     {
         public ChatMessageViewModel() { }

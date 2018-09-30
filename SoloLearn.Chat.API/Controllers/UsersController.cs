@@ -25,6 +25,11 @@ namespace SoloLearn.Chat.API.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Create new User based on a form page
+        /// </summary>
+        /// <param name="user">User viewModel</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Post([FromForm]UserViewModel user)
         {
@@ -47,6 +52,11 @@ namespace SoloLearn.Chat.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Authenticate an User
+        /// </summary>
+        /// <param name="loginData">User ViewModel</param>
+        /// <returns></returns>
         [HttpPost("/Login")]
         public ActionResult Login([FromForm]UserViewModel loginData)
         {
@@ -77,12 +87,20 @@ namespace SoloLearn.Chat.API.Controllers
                 return Redirect("/login.html?m=failed");
         }
 
+        /// <summary>
+        /// Who Am I 
+        /// </summary>
+        /// <returns>Meesage</returns>
         [HttpGet]
         public JsonResult Get()
         {
             return Json(new { userName = HttpContext.User.Identity.Name });
         }
 
+        /// <summary>
+        /// Singout form the chat
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("/Logout")]
         public ActionResult Logout()
         {

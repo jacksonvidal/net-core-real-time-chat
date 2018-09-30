@@ -7,6 +7,9 @@ using System.Text;
 
 namespace SoloLearn.Chat.Core.Data
 {
+    /// <summary>
+    /// Basic DbContext
+    /// </summary>
     public class ChatDbContext : DbContext
     {
         public ChatDbContext(DbContextOptions<ChatDbContext> options) : base(options) { }

@@ -12,7 +12,7 @@ namespace SoloLearn.Chat.Core.Service
         TEntity GetSingleLast(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
-        void AddRange(ICollection<TEntity> entities);
+        void Add(ICollection<TEntity> entities);
         void Remove(TEntity entity);
         void Update(TEntity entity);
 

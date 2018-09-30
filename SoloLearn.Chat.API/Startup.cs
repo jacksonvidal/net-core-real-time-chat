@@ -26,8 +26,6 @@ namespace SoloLearn.Chat.API
 
             if (env.IsDevelopment())
             {
-                // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
-                //builder.AddUserSecrets();
             }
 
             builder.AddEnvironmentVariables();
@@ -39,6 +37,7 @@ namespace SoloLearn.Chat.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Calling the Integration project to retrive the injected dependencies
             services = Core.Integration.Startup.Run(services, Configuration);
 
             var settings = new JsonSerializerSettings();
@@ -50,11 +49,13 @@ namespace SoloLearn.Chat.API
                                             provider => serializer,
                                             ServiceLifetime.Transient));
 
+            //Allow cors calling
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
             {
                 builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:60172").AllowCredentials();
             }));
 
+            //Creates the authentication method configurations
             services.AddAuthentication(options =>
             {
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -92,8 +93,10 @@ namespace SoloLearn.Chat.API
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCors("CorsPolicy");
+            //Allow to use websockets to handle realtime
             app.UseWebSockets();
 
+            //Create a path to the SignalR Hub
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/ChatHub");

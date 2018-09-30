@@ -7,6 +7,10 @@ using System.Text;
 
 namespace SoloLearn.Chat.Service
 {
+    /// <summary>
+    /// Because the lazy load it's not implemented yet on EF Core and I chose to use the abstract 
+    /// repository and service pattern it is necessary to create this structure to handle the many-to-many relashionships
+    /// </summary>
     public class RoomMessageService : ServiceBase<RoomMessages>, IRoomMessageService
     {
         public RoomMessageService(IRoomMessageRepository repository) : base(repository) { }
