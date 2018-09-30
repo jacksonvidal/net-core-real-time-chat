@@ -52,12 +52,14 @@
 
             $("#btn-new-room").click(function () {
 
+                let newRoom = $("#roomName").val();
+
                 $.ajax({
                     type: "POST",
                     dataType: "json",
                     contentType: "application/json",
                     url: "/api/Rooms",
-                    data: JSON.stringify({ "Name": room }),
+                    data: JSON.stringify({ "Name": newRoom }),
                     success(data) {
 
                         if (data.message == "room created") {
@@ -106,29 +108,21 @@
 
                     connection.invoke("JoinRoom", room).catch(err => console.error(err.toString()));
 
-                    document.getElementById('msg_send_btn').addEventListener('click', function (event) {
+                    document.getElementById('write_msg').addEventListener('keypress', function (event) {
 
-                        lastMessage = $(".write_msg").val();
-
-                        connection.invoke("Send",
-                            {
-                                Content: lastMessage,
-                                RoomName: room
-                            }).catch(err => console.error(err.toString()));
-
-                        let element = "<div class='outgoing_msg'>" +
-                            "    <div class='sent_msg'>" +
-                            "       <p>" + $(".write_msg").val() + "</p>" +
-                            "        <span class='time_date'> 11:01 AM    |    June 9</span>" +
-                            "     </div>" +
-                            " </div>";
-
-                        $(".msg_history").append(element);
-
-                        element = "";
-
-                        $(".write_msg").val("");
+                        if(event.keyCode == 13) {
+                            let message = $(".write_msg").val();
+                            sendMessage(connection, message, room);
+                        }
                     });
+
+                    document.getElementById('msg_send_btn').addEventListener('click', function (event) {
+                        let message = $(".write_msg").val();
+
+                        sendMessage(connection, message, room);
+                    });
+
+
 
                 }).catch(error => {
                     console.error(error.message);
@@ -194,7 +188,7 @@
         }
 
         function getUrlParameter(sParam) {
-            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            let sPageURL = decodeURIComponent(window.location.search.substring(1)),
                 sURLVariables = sPageURL.split('&'),
                 sParameterName,
                 i;
@@ -207,6 +201,29 @@
                 }
             }
         };
+
+        function sendMessage(connection, message, room) {
+            lastMessage = message;
+            
+            connection.invoke("Send",
+                {
+                    Content: lastMessage,
+                    RoomName: room
+                }).catch(err => console.error(err.toString()));
+
+            let element = "<div class='outgoing_msg'>" +
+                    "    <div class='sent_msg'>" +
+                    "       <p>" + $(".write_msg").val() + "</p>" +
+                    "        <span class='time_date'> 11:01 AM    |    June 9</span>" +
+                    "     </div>" +
+                    " </div>";
+                
+            $(".msg_history").append(element);
+
+            element = "";
+
+            $(".write_msg").val("");
+        }
 
     </script>
 </head>
@@ -232,7 +249,7 @@
                     </div>
                     <div class="type_msg">
                         <div class="input_msg_write">
-                            <input type="text" class="write_msg" placeholder="Type a message" />
+                            <input type="text" id="write_msg" class="write_msg" placeholder="Type a message" />
                             <button class="msg_send_btn" id="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> >> </button>
                         </div>
                     </div>
