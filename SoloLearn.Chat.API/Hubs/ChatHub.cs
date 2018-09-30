@@ -50,11 +50,14 @@ namespace SoloLearn.Chat.Api.Hubs
 
             if (room != null && user != null)
             {
-                _roomUsersService.Add(new RoomUsers
+                if(_roomService.Count(e => e.Users.Any(r => r.RoomId == room.Id && r.UserId == user.Id)) <= 0)
                 {
-                    RoomId = room.Id,
-                    UserId = user.Id,
-                });
+                    _roomUsersService.Add(new RoomUsers
+                    {
+                        RoomId = room.Id,
+                        UserId = user.Id,
+                    });
+                }
 
                 await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
             }
